@@ -40,6 +40,12 @@ namespace HWindowView
             _roiController.Reset( );
         }
 
+        public void ClearHObject( )
+        {
+            //清空hobjectList
+            _hWndControl.ClearHObjectList( );
+        }
+
         /// <summary>
         /// 显示图像
         /// </summary>

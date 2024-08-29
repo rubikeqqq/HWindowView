@@ -751,6 +751,8 @@ namespace HWindowView.Model
 
             _hObjectList.Clear( );
             _hTextList.Clear( );
+
+            Repaint( );
         }
 
         /// <summary>

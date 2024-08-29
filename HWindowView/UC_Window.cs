@@ -36,11 +36,11 @@ namespace HWindowView
         /// <summary>
         /// 初始化控件
         /// </summary>
-        public UC_Window()
+        public UC_Window( )
         {
-            InitializeComponent();
+            InitializeComponent( );
 
-            _view = new ViewWindow(mCtrl_HWindow);
+            _view = new ViewWindow( mCtrl_HWindow );
 
             try
             {
@@ -50,31 +50,31 @@ namespace HWindowView
             }
             catch { }
 
-            fit_strip = new ToolStripMenuItem("适应窗口");
-            fit_strip.Click += new EventHandler((s, e) => DispImageFit(mCtrl_HWindow));
+            fit_strip = new ToolStripMenuItem( "适应窗口" );
+            fit_strip.Click += new EventHandler( ( s , e ) => DispImageFit( mCtrl_HWindow ) );
 
-            barVisible_strip = new ToolStripMenuItem("显示StatusBar");
+            barVisible_strip = new ToolStripMenuItem( "显示StatusBar" );
             barVisible_strip.CheckOnClick = true;
-            barVisible_strip.CheckedChanged += new EventHandler(barVisible_strip_CheckedChanged);
+            barVisible_strip.CheckedChanged += new EventHandler( barVisible_strip_CheckedChanged );
             m_CtrlHStatusLabelCtrl.Visible = false;
             mCtrl_HWindow.Height = this.Height;
 
-            saveImg_strip = new ToolStripMenuItem("保存原始图像");
-            saveImg_strip.Click += new EventHandler((s, e) => SaveImage());
+            saveImg_strip = new ToolStripMenuItem( "保存原始图像" );
+            saveImg_strip.Click += new EventHandler( ( s , e ) => SaveImage( ) );
 
-            saveWindow_strip = new ToolStripMenuItem("保存窗口缩略图");
-            saveWindow_strip.Click += new EventHandler((s, e) => SaveWindowDump());
+            saveWindow_strip = new ToolStripMenuItem( "保存窗口缩略图" );
+            saveWindow_strip.Click += new EventHandler( ( s , e ) => SaveWindowDump( ) );
 
-            cross_strip = new ToolStripMenuItem("显示中心线");
+            cross_strip = new ToolStripMenuItem( "显示中心线" );
             cross_strip.CheckOnClick = true;
-            cross_strip.CheckedChanged += new EventHandler(Cross_CheckedChanged);
+            cross_strip.CheckedChanged += new EventHandler( Cross_CheckedChanged );
 
-            hv_MenuStrip = new ContextMenuStrip();
-            hv_MenuStrip.Items.Add(fit_strip);
-            hv_MenuStrip.Items.Add(barVisible_strip);
-            hv_MenuStrip.Items.Add(cross_strip);
-            hv_MenuStrip.Items.Add(saveImg_strip);
-            hv_MenuStrip.Items.Add(saveWindow_strip);
+            hv_MenuStrip = new ContextMenuStrip( );
+            hv_MenuStrip.Items.Add( fit_strip );
+            hv_MenuStrip.Items.Add( barVisible_strip );
+            hv_MenuStrip.Items.Add( cross_strip );
+            hv_MenuStrip.Items.Add( saveImg_strip );
+            hv_MenuStrip.Items.Add( saveWindow_strip );
 
             cross_strip.Enabled = false;
             barVisible_strip.Enabled = false;
@@ -82,7 +82,7 @@ namespace HWindowView
             saveImg_strip.Enabled = false;
             saveWindow_strip.Enabled = false;
             mCtrl_HWindow.ContextMenuStrip = hv_MenuStrip;
-            mCtrl_HWindow.SizeChanged += new EventHandler((s, e) => DispImageFit(mCtrl_HWindow));
+            mCtrl_HWindow.SizeChanged += new EventHandler( ( s , e ) => DispImageFit( mCtrl_HWindow ) );
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace HWindowView
             set
             {
                 //缩放控制
-                _view.SetDrawModel(value);
+                _view.SetDrawModel( value );
                 //绘制模式 不现实右键
-                if (value == true)
+                if( value == true )
                 {
                     mCtrl_HWindow.ContextMenuStrip = null;
                 }
@@ -126,7 +126,7 @@ namespace HWindowView
             get { return _editModel; }
             set
             {
-                _view.SetEditModel(value);
+                _view.SetEditModel( value );
                 _editModel = value;
             }
         }
@@ -139,16 +139,16 @@ namespace HWindowView
             get { return ho_image; }
             set
             {
-                if (value != null)
+                if( value != null )
                 {
-                    if (ho_image != null)
+                    if( ho_image != null )
                     {
-                        ho_image.Dispose();
+                        ho_image.Dispose( );
                     }
 
                     ho_image = value;
-                    ho_image.GetImageSize(out hv_imageWidth, out hv_imageHeight);
-                    str_imgSize = String.Format("图像大小:({0},{1})", hv_imageWidth, hv_imageHeight);
+                    ho_image.GetImageSize( out hv_imageWidth , out hv_imageHeight );
+                    str_imgSize = String.Format( "图像大小:({0},{1})" , hv_imageWidth , hv_imageHeight );
 
                     try
                     {
@@ -158,8 +158,8 @@ namespace HWindowView
                         saveWindow_strip.Enabled = true;
                         cross_strip.Enabled = true;
                     }
-                    catch (Exception) { }
-                    _view.DisplayImage(ho_image);
+                    catch( Exception ) { }
+                    _view.DisplayImage( ho_image );
                 }
             }
         }
@@ -167,12 +167,12 @@ namespace HWindowView
         /// <summary>
         /// 清空窗体显示
         /// </summary>
-        public void ClearWindow()
+        public void ClearWindow( )
         {
             try
             {
                 this.Invoke(
-                    new Action(() =>
+                    new Action( ( ) =>
                     {
                         m_CtrlHStatusLabelCtrl.Visible = false;
                         barVisible_strip.Enabled = false;
@@ -181,22 +181,27 @@ namespace HWindowView
                         saveWindow_strip.Enabled = false;
                         cross_strip.Enabled = false;
 
-                        mCtrl_HWindow.HalconWindow.ClearWindow();
-                        _view.ClearWindow();
-                    })
+                        mCtrl_HWindow.HalconWindow.ClearWindow( );
+                        _view.ClearWindow( );
+                    } )
                 );
             }
-            catch (Exception ex)
+            catch( Exception ex )
             {
                 throw ex;
             }
+        }
+
+        public void ClearObj( )
+        {
+            _view.ClearHObject( );
         }
 
         /// <summary>
         /// 返回 HALCON 控件
         /// </summary>
         /// <returns> HALCON 控件 </returns>
-        public HWindowControl GetHWindowControl()
+        public HWindowControl GetHWindowControl( )
         {
             return mCtrl_HWindow;
         }
@@ -205,15 +210,15 @@ namespace HWindowView
         /// 添加图片并显示
         /// </summary>
         /// <param name="hobject"> 传递Hobject,必须为图像 </param>
-        public void HobjectToHimage(HObject hobject)
+        public void HobjectToHimage( HObject hobject )
         {
-            if (hobject == null || !hobject.IsInitialized())
+            if( hobject == null || !hobject.IsInitialized( ) )
             {
-                ClearWindow();
+                ClearWindow( );
                 return;
             }
 
-            Image = new HImage(hobject);
+            Image = new HImage( hobject );
         }
 
         #region 事件处理器
@@ -223,13 +228,13 @@ namespace HWindowView
         /// </summary>
         /// <param name="sender"> </param>
         /// <param name="e"> </param>
-        private void barVisible_strip_CheckedChanged(object sender, EventArgs e)
+        private void barVisible_strip_CheckedChanged( object sender , EventArgs e )
         {
             ToolStripMenuItem strip = sender as ToolStripMenuItem;
 
-            SuspendLayout();
+            SuspendLayout( );
 
-            if (strip.Checked)
+            if( strip.Checked )
             {
                 m_CtrlHStatusLabelCtrl.Visible = true;
                 mCtrl_HWindow.HMouseMove += HWindowControl_HMouseMove;
@@ -240,21 +245,21 @@ namespace HWindowView
                 mCtrl_HWindow.HMouseMove -= HWindowControl_HMouseMove;
             }
 
-            ResumeLayout(false);
-            PerformLayout();
+            ResumeLayout( false );
+            PerformLayout( );
         }
 
         /// <summary>
         /// 图片适应大小显示在窗体
         /// </summary>
         /// <param name="hw_Ctrl"> halcon窗体控件 </param>
-        private void DispImageFit(HWindowControl hw_Ctrl)
+        private void DispImageFit( HWindowControl hw_Ctrl )
         {
             try
             {
-                _view.ResetWindowImage();
+                _view.ResetWindowImage( );
             }
-            catch (Exception) { }
+            catch( Exception ) { }
         }
 
         /// <summary>
@@ -262,9 +267,9 @@ namespace HWindowView
         /// </summary>
         /// <param name="sender"> </param>
         /// <param name="e"> </param>
-        private void HWindowControl_HMouseMove(object sender, HMouseEventArgs e)
+        private void HWindowControl_HMouseMove( object sender , HMouseEventArgs e )
         {
-            if (ho_image != null)
+            if( ho_image != null )
             {
                 try
                 {
@@ -276,28 +281,28 @@ namespace HWindowView
                     bool _isXOut = true,
                         _isYOut = true;
                     HTuple channel_count;
-                    HOperatorSet.CountChannels(ho_image, out channel_count);
+                    HOperatorSet.CountChannels( ho_image , out channel_count );
 
-                    hv_window.GetMpositionSubPix(out positionY, out positionX, out button_state);
+                    hv_window.GetMpositionSubPix( out positionY , out positionX , out button_state );
 
                     str_position = String.Format(
-                        "X: {0:0000.0}, Y: {1:0000.0}",
-                        positionX,
+                        "X: {0:0000.0}, Y: {1:0000.0}" ,
+                        positionX ,
                         positionY
                     );
 
-                    _isXOut = (positionX < 0 || positionX >= hv_imageWidth);
-                    _isYOut = (positionY < 0 || positionY >= hv_imageHeight);
+                    _isXOut = ( positionX < 0 || positionX >= hv_imageWidth );
+                    _isYOut = ( positionY < 0 || positionY >= hv_imageHeight );
 
-                    if (!_isXOut && !_isYOut)
+                    if( !_isXOut && !_isYOut )
                     {
-                        if ((int)channel_count == 1)
+                        if( ( int )channel_count == 1 )
                         {
                             double grayVal;
-                            grayVal = ho_image.GetGrayval((int)positionY, (int)positionX);
-                            str_value = String.Format("Val: {0:000.0}", grayVal);
+                            grayVal = ho_image.GetGrayval( ( int )positionY , ( int )positionX );
+                            str_value = String.Format( "Val: {0:000.0}" , grayVal );
                         }
-                        else if ((int)channel_count == 3)
+                        else if( ( int )channel_count == 3 )
                         {
                             double grayValRed,
                                 grayValGreen,
@@ -307,22 +312,22 @@ namespace HWindowView
                                 _GreenChannel,
                                 _BlueChannel;
 
-                            _RedChannel = ho_image.AccessChannel(1);
-                            _GreenChannel = ho_image.AccessChannel(2);
-                            _BlueChannel = ho_image.AccessChannel(3);
+                            _RedChannel = ho_image.AccessChannel( 1 );
+                            _GreenChannel = ho_image.AccessChannel( 2 );
+                            _BlueChannel = ho_image.AccessChannel( 3 );
 
-                            grayValRed = _RedChannel.GetGrayval((int)positionY, (int)positionX);
-                            grayValGreen = _GreenChannel.GetGrayval((int)positionY, (int)positionX);
-                            grayValBlue = _BlueChannel.GetGrayval((int)positionY, (int)positionX);
+                            grayValRed = _RedChannel.GetGrayval( ( int )positionY , ( int )positionX );
+                            grayValGreen = _GreenChannel.GetGrayval( ( int )positionY , ( int )positionX );
+                            grayValBlue = _BlueChannel.GetGrayval( ( int )positionY , ( int )positionX );
 
-                            _RedChannel.Dispose();
-                            _GreenChannel.Dispose();
-                            _BlueChannel.Dispose();
+                            _RedChannel.Dispose( );
+                            _GreenChannel.Dispose( );
+                            _BlueChannel.Dispose( );
 
                             str_value = String.Format(
-                                "Val: ({0:000.0}, {1:000.0}, {2:000.0})",
-                                grayValRed,
-                                grayValGreen,
+                                "Val: ({0:000.0}, {1:000.0}, {2:000.0})" ,
+                                grayValRed ,
+                                grayValGreen ,
                                 grayValBlue
                             );
                         }
@@ -334,7 +339,7 @@ namespace HWindowView
                             str_imgSize + "    " + str_position + "    " + str_value;
                     }
                 }
-                catch (Exception)
+                catch( Exception )
                 {
                     //不处理
                 }
@@ -346,46 +351,46 @@ namespace HWindowView
         /// </summary>
         /// <param name="sender"> </param>
         /// <param name="e"> </param>
-        private void mCtrl_HWindow_MouseLeave(object sender, EventArgs e)
+        private void mCtrl_HWindow_MouseLeave( object sender , EventArgs e )
         {
             //避免鼠标离开窗口,再返回的时候,图表随着鼠标移动
-            _view.Mouseleave();
+            _view.Mouseleave( );
         }
 
         /// <summary>
         /// 保存原始图片到本地
         /// </summary>
-        private void SaveImage()
+        private void SaveImage( )
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            SaveFileDialog sfd = new SaveFileDialog( );
             sfd.Filter = "BMP图像|*.bmp|所有文件|*.*";
 
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if( sfd.ShowDialog( ) == DialogResult.OK )
             {
-                if (String.IsNullOrEmpty(sfd.FileName))
+                if( String.IsNullOrEmpty( sfd.FileName ) )
                 {
                     return;
                 }
 
-                HOperatorSet.WriteImage(ho_image, "bmp", 0, sfd.FileName);
+                HOperatorSet.WriteImage( ho_image , "bmp" , 0 , sfd.FileName );
             }
         }
 
         /// <summary>
         /// 保存窗体截图到本地
         /// </summary>
-        private void SaveWindowDump()
+        private void SaveWindowDump( )
         {
-            SaveFileDialog sfd = new SaveFileDialog();
+            SaveFileDialog sfd = new SaveFileDialog( );
             sfd.Filter = "PNG图像|*.png|所有文件|*.*";
 
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if( sfd.ShowDialog( ) == DialogResult.OK )
             {
-                if (String.IsNullOrEmpty(sfd.FileName))
+                if( String.IsNullOrEmpty( sfd.FileName ) )
                     return;
 
                 //截取窗口图
-                HOperatorSet.DumpWindow(hWindowControl.HalconWindow, "png best", sfd.FileName);
+                HOperatorSet.DumpWindow( hWindowControl.HalconWindow , "png best" , sfd.FileName );
             }
         }
 
@@ -394,18 +399,18 @@ namespace HWindowView
         /// </summary>
         /// <param name="sender"> </param>
         /// <param name="e"> </param>
-        private void Cross_CheckedChanged(object sender, EventArgs e)
+        private void Cross_CheckedChanged( object sender , EventArgs e )
         {
             ToolStripMenuItem strip = sender as ToolStripMenuItem;
-            if (strip.Checked)
+            if( strip.Checked )
             {
-                _view.SetCross(true);
+                _view.SetCross( true );
             }
             else
             {
-                _view.SetCross(false);
+                _view.SetCross( false );
             }
-            _view.Repaint();
+            _view.Repaint( );
         }
 
         #endregion 事件处理器
@@ -416,11 +421,11 @@ namespace HWindowView
         /// 默认红颜色显示
         /// </summary>
         /// <param name="hObj"> 传入的region.xld,image </param>
-        public void DispObj(HObject hObj)
+        public void DispObj( HObject hObj )
         {
-            lock (this)
+            lock( this )
             {
-                _view.DisplayHobject(hObj, null);
+                _view.DisplayHobject( hObj , null );
             }
         }
 
@@ -429,29 +434,37 @@ namespace HWindowView
         /// </summary>
         /// <param name="hObj"> 传入的region.xld,image </param>
         /// <param name="color"> 颜色 </param>
-        public void DispObj(HObject hObj, string color)
+        public void DispObj( HObject hObj , string color )
         {
-            lock (this)
+            lock( this )
             {
-                _view.DisplayHobject(hObj, color);
+                _view.DisplayHobject( hObj , color );
             }
         }
 
         public void DispText(
-            HTuple htext,
-            HTuple coordSystem,
-            HTuple color,
-            HTuple row,
-            HTuple col,
-            int size,
-            string font,
-            HTuple bold,
+            HTuple htext ,
+            HTuple coordSystem ,
+            HTuple color ,
+            HTuple row ,
+            HTuple col ,
+            int size ,
+            string font ,
+            HTuple bold ,
             HTuple slant
         )
         {
-            lock (this)
+            lock( this )
             {
-                _view.DisplayHtuple(htext, coordSystem, color, row, col, size, font, bold, slant);
+                _view.DisplayHtuple( htext , coordSystem , color , row , col , size , font , bold , slant );
+            }
+        }
+
+        public void DispText( HTuple htext , HTuple color )
+        {
+            lock( this )
+            {
+                _view.DispText( htext , color );
             }
         }
 
@@ -472,24 +485,24 @@ namespace HWindowView
         /// 清理所有正在使用的资源。
         /// </summary>
         /// <param name="disposing"> 如果应释放托管资源，为 true；否则为 false。 </param>
-        protected override void Dispose(bool disposing)
+        protected override void Dispose( bool disposing )
         {
-            if (disposing && (components != null))
+            if( disposing && ( components != null ) )
             {
-                components.Dispose();
-                hv_MenuStrip.Dispose();
+                components.Dispose( );
+                hv_MenuStrip.Dispose( );
 
                 mCtrl_HWindow.HMouseMove -= HWindowControl_HMouseMove;
             }
-            if (disposing && ho_image != null)
+            if( disposing && ho_image != null )
             {
-                ho_image.Dispose();
+                ho_image.Dispose( );
             }
-            if (disposing && hv_window != null)
+            if( disposing && hv_window != null )
             {
-                hv_window.Dispose();
+                hv_window.Dispose( );
             }
-            base.Dispose(disposing);
+            base.Dispose( disposing );
         }
 
         #region 组件设计器生成的代码
@@ -497,22 +510,22 @@ namespace HWindowView
         /// <summary>
         /// 设计器支持所需的方法 - 不要 使用代码编辑器修改此方法的内容。
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent( )
         {
-            this.m_CtrlHStatusLabelCtrl = new System.Windows.Forms.Label();
-            this.mCtrl_HWindow = new HalconDotNet.HWindowControl();
-            this.SuspendLayout();
+            this.m_CtrlHStatusLabelCtrl = new System.Windows.Forms.Label( );
+            this.mCtrl_HWindow = new HalconDotNet.HWindowControl( );
+            this.SuspendLayout( );
             // 
             // m_CtrlHStatusLabelCtrl
             // 
             this.m_CtrlHStatusLabelCtrl.BackColor = System.Drawing.Color.Black;
             this.m_CtrlHStatusLabelCtrl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.m_CtrlHStatusLabelCtrl.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.m_CtrlHStatusLabelCtrl.Font = new System.Drawing.Font( "微软雅黑" , 9F , System.Drawing.FontStyle.Bold , System.Drawing.GraphicsUnit.Point , ( ( byte )( 134 ) ) );
             this.m_CtrlHStatusLabelCtrl.ForeColor = System.Drawing.Color.PaleTurquoise;
-            this.m_CtrlHStatusLabelCtrl.Location = new System.Drawing.Point(0, 358);
-            this.m_CtrlHStatusLabelCtrl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.m_CtrlHStatusLabelCtrl.Location = new System.Drawing.Point( 0 , 358 );
+            this.m_CtrlHStatusLabelCtrl.Margin = new System.Windows.Forms.Padding( 4 , 3 , 4 , 3 );
             this.m_CtrlHStatusLabelCtrl.Name = "m_CtrlHStatusLabelCtrl";
-            this.m_CtrlHStatusLabelCtrl.Size = new System.Drawing.Size(526, 22);
+            this.m_CtrlHStatusLabelCtrl.Size = new System.Drawing.Size( 526 , 22 );
             this.m_CtrlHStatusLabelCtrl.TabIndex = 1;
             this.m_CtrlHStatusLabelCtrl.Text = "(-,-)";
             // 
@@ -522,27 +535,27 @@ namespace HWindowView
             this.mCtrl_HWindow.BorderColor = System.Drawing.Color.Black;
             this.mCtrl_HWindow.Cursor = System.Windows.Forms.Cursors.Default;
             this.mCtrl_HWindow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mCtrl_HWindow.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
-            this.mCtrl_HWindow.Location = new System.Drawing.Point(0, 0);
-            this.mCtrl_HWindow.Margin = new System.Windows.Forms.Padding(0);
+            this.mCtrl_HWindow.ImagePart = new System.Drawing.Rectangle( 0 , 0 , 640 , 480 );
+            this.mCtrl_HWindow.Location = new System.Drawing.Point( 0 , 0 );
+            this.mCtrl_HWindow.Margin = new System.Windows.Forms.Padding( 0 );
             this.mCtrl_HWindow.Name = "mCtrl_HWindow";
-            this.mCtrl_HWindow.Size = new System.Drawing.Size(526, 380);
+            this.mCtrl_HWindow.Size = new System.Drawing.Size( 526 , 380 );
             this.mCtrl_HWindow.TabIndex = 0;
-            this.mCtrl_HWindow.WindowSize = new System.Drawing.Size(526, 380);
-            this.mCtrl_HWindow.MouseLeave += new System.EventHandler(this.mCtrl_HWindow_MouseLeave);
+            this.mCtrl_HWindow.WindowSize = new System.Drawing.Size( 526 , 380 );
+            this.mCtrl_HWindow.MouseLeave += new System.EventHandler( this.mCtrl_HWindow_MouseLeave );
             // 
             // UC_Window
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 8F , 15F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.m_CtrlHStatusLabelCtrl);
-            this.Controls.Add(this.mCtrl_HWindow);
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Controls.Add( this.m_CtrlHStatusLabelCtrl );
+            this.Controls.Add( this.mCtrl_HWindow );
+            this.Margin = new System.Windows.Forms.Padding( 4 , 3 , 4 , 3 );
             this.Name = "UC_Window";
-            this.Size = new System.Drawing.Size(526, 380);
-            this.ResumeLayout(false);
+            this.Size = new System.Drawing.Size( 526 , 380 );
+            this.ResumeLayout( false );
 
         }
 
