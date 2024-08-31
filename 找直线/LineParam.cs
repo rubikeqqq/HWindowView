@@ -97,7 +97,7 @@ namespace 找直线
             var cols = _metrologyHandle.GetMetrologyObjectResult( index , "all" , "used_edges" , "column" );
 
             //8、交点
-            result.Points.GenCrossContourXld(rows, cols ,3,0.785398);
+            result.Points.GenCrossContourXld(rows, cols ,6,0.785398);
 
             //结果线
             result.Line = _metrologyHandle.GetMetrologyObjectResultContour( index , "all" , 1.5 );

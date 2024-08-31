@@ -32,7 +32,7 @@ namespace 找直线
             //    uC_Window1.HobjectToHimage( image );
             //}
 
-            image.ReadImage( "三角.png" );
+            image.ReadImage( "直线.png" );
 
             uC_Window1.HobjectToHimage( image );
         }
@@ -81,7 +81,7 @@ namespace 找直线
             lineResult = tool.FindLine( image , rowBegin , colBegin , rowEnd , colEnd , lineParam );
 
             uC_Window1.DispObj( lineResult.Rectangles , "blue" );
-            uC_Window1.DispObj( lineResult.Points , "green" );
+            uC_Window1.DispObj( lineResult.Points , "red" );
             uC_Window1.DispObj( lineResult.Line , "green" );
 
         }
