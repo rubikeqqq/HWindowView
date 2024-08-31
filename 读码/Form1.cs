@@ -12,6 +12,12 @@ namespace 读码
         public Form1( )
         {
             InitializeComponent( );
+            this.FormClosing += Form1_FormClosing;
+        }
+
+        private void Form1_FormClosing( object sender , FormClosingEventArgs e )
+        {
+            codeDetect.ClearDataCode2DModel();
         }
 
         private HImage image = new HImage( );

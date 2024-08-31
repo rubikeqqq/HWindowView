@@ -9,6 +9,10 @@ namespace 读码
     {
         public HDataCode2D CodeHandle;
 
+        public void ClearDataCode2DModel( )
+        {
+            CodeHandle?.ClearHandle( );
+        }
 
         public void CreateDataCode2DModel( string symbolType , CodeType codeType )
         {
