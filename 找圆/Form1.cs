@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace 找圆
         CircleParam circleParam = new CircleParam( );
         CircleResult circleResult = new CircleResult( );
         CircleTool tool = new CircleTool( );
+
+        Dictionary<string , HXLDCont> hXLDConts = new Dictionary<string , HXLDCont>( );
 
         void Init( )
         {
@@ -46,8 +49,52 @@ namespace 找圆
 
         private void button3_Click( object sender , EventArgs e )
         {
-            uC_Window1.ViewWindow.GenCircle( 100 , 100 , 50 ,ref rois );
+            uC_Window1.ViewWindow.GenCircle( 100 , 100 , 50 , ref rois );
             rois.Last( ).Color = "blue";
+        }
+
+        private void cbRect_CheckedChanged( object sender , EventArgs e )
+        {
+            uC_Window1.ClearObj( );
+            if( cbRect.Checked )
+            {
+                hXLDConts.Add( "rects" , circleResult.Rects );
+            }
+            else
+            {
+                if( hXLDConts.ContainsKey( "rects" ) )
+                    hXLDConts.Remove( "rects" );
+            }
+
+            foreach( var item in hXLDConts )
+            {
+                switch( item.Key )
+                {
+                    case "points":
+                        uC_Window1.DispObj( item.Value , "red" );
+                        break;
+                    case "rects":
+                        uC_Window1.DispObj( item.Value , "blue" );
+                        break;
+                    default:
+                        uC_Window1.DispObj( item.Value , "green" );
+                        break;
+                }
+                    
+
+            }
+        }
+
+        private void cbROI_CheckedChanged( object sender , EventArgs e )
+        {
+            if( cbROI.Checked )
+            {
+                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Include_ROI );
+            }
+            else
+            {
+                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Exclude_ROI );
+            }
         }
 
         private void button2_Click( object sender , EventArgs e )
@@ -61,16 +108,23 @@ namespace 找圆
                 radius = rois[ 0 ].GetModelData( )[ 2 ];
             }
 
-            uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Exclude_ROI );
+            
 
-            circleResult = tool.FindCircle( image , row , col  , radius , circleParam );
+            circleResult = tool.FindCircle( image , row , col , radius , circleParam );
 
-            uC_Window1.DispObj( circleResult.Rects , "blue" );
+            hXLDConts.Clear( );
+
+            hXLDConts.Add( "centerPoint" , circleResult.CenterPoint );
+            hXLDConts.Add( "points" , circleResult.Points );
+            hXLDConts.Add( "circle" , circleResult.CircleContour );
+            //uC_Window1.DispObj( circleResult.Rects , "blue" );
             uC_Window1.DispObj( circleResult.Points , "red" );
             uC_Window1.DispObj( circleResult.CircleContour , "green" );
+            uC_Window1.DispObj( circleResult.CenterPoint , "green" );
+
         }
 
-        
+
 
         private void button4_Click( object sender , EventArgs e )
         {

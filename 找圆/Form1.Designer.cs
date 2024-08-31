@@ -50,6 +50,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbNum = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.cbRect = new System.Windows.Forms.CheckBox();
+            this.cbROI = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,6 +90,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbROI);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.cbTransition);
             this.groupBox1.Controls.Add(this.cbSelect);
@@ -272,11 +275,34 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // cbRect
+            // 
+            this.cbRect.AutoSize = true;
+            this.cbRect.Location = new System.Drawing.Point(947, 26);
+            this.cbRect.Name = "cbRect";
+            this.cbRect.Size = new System.Drawing.Size(104, 19);
+            this.cbRect.TabIndex = 10;
+            this.cbRect.Text = "显示矩形框";
+            this.cbRect.UseVisualStyleBackColor = true;
+            this.cbRect.CheckedChanged += new System.EventHandler(this.cbRect_CheckedChanged);
+            // 
+            // cbROI
+            // 
+            this.cbROI.AutoSize = true;
+            this.cbROI.Location = new System.Drawing.Point(235, 425);
+            this.cbROI.Name = "cbROI";
+            this.cbROI.Size = new System.Drawing.Size(83, 19);
+            this.cbROI.TabIndex = 19;
+            this.cbROI.Text = "显示ROI";
+            this.cbROI.UseVisualStyleBackColor = true;
+            this.cbROI.CheckedChanged += new System.EventHandler(this.cbROI_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 636);
+            this.Controls.Add(this.cbRect);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
@@ -287,6 +313,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -314,6 +341,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbNum;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox cbRect;
+        private System.Windows.Forms.CheckBox cbROI;
     }
 }
 

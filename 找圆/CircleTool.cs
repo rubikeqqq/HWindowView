@@ -36,12 +36,18 @@ namespace 找圆
 
             metrology.ApplyMetrologyModel( image );
 
+            //矩形框点
             var rows = metrology.GetMetrologyObjectResult(index,"all", "used_edges" , "row");
             var cols = metrology.GetMetrologyObjectResult( index , "all" , "used_edges" , "column" );
+            //中心点
+            var cRow = metrology.GetMetrologyObjectResult( index , "all" , "result_type" , "row" );
+            var cCol = metrology.GetMetrologyObjectResult( index , "all" , "result_type" , "column" );
+
 
             result.CircleContour = metrology.GetMetrologyObjectResultContour( index , "all" , 1.5 );
             result.Points.GenCrossContourXld( rows , cols , 6 , 0.785398 );
             result.Rects = metrology.GetMetrologyObjectMeasures( index , "all" , out var _ , out var _ );
+            result.CenterPoint.GenCrossContourXld( cRow.D , cCol.D , 16 , 0.78 );
 
             return result;
         }
@@ -75,15 +81,17 @@ namespace 找圆
 
     class CircleResult
     {
-        public HXLDCont Points;
-        public HXLDCont Rects;
-        public HXLDCont CircleContour;
+        public HXLDCont Points;        //交叉点
+        public HXLDCont Rects;         //矩形框
+        public HXLDCont CircleContour; //圆
+        public HXLDCont CenterPoint;   //中心点
 
         public CircleResult()
         {
             Points = new HXLDCont();
             Rects = new HXLDCont();
             CircleContour = new HXLDCont();
+            CenterPoint = new HXLDCont();
         }
     }
 }
