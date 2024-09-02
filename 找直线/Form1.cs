@@ -23,18 +23,18 @@ namespace 找直线
 
         private void button1_Click( object sender , EventArgs e )
         {
-            //OpenFileDialog openFileDialog = new OpenFileDialog( );
-            //openFileDialog.Filter = "图像文件(*.jpg,*.bmp,*.png,*.jpeg)|*.jpg;*.bmp;*.png;*.jpeg";
-            //if( openFileDialog.ShowDialog( ) == DialogResult.OK )
-            //{
-            //    image.ReadImage( openFileDialog.FileName );
+            OpenFileDialog openFileDialog = new OpenFileDialog( );
+            openFileDialog.Filter = "图像文件(*.jpg,*.bmp,*.png,*.jpeg)|*.jpg;*.bmp;*.png;*.jpeg";
+            if( openFileDialog.ShowDialog( ) == DialogResult.OK )
+            {
+                image.ReadImage( openFileDialog.FileName );
 
-            //    uC_Window1.HobjectToHimage( image );
-            //}
+                uC_Window1.HobjectToHimage( image );
+            }
 
-            image.ReadImage( "直线.png" );
+            //image.ReadImage( "直线.png" );
 
-            uC_Window1.HobjectToHimage( image );
+            //uC_Window1.HobjectToHimage( image );
         }
 
         void Init( )

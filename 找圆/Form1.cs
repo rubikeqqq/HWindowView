@@ -40,9 +40,19 @@ namespace 找圆
 
         private void button1_Click( object sender , EventArgs e )
         {
-            image.ReadImage( "齿轮.bmp" );
 
-            uC_Window1.HobjectToHimage( image );
+            OpenFileDialog openFileDialog = new OpenFileDialog( );
+            openFileDialog.Filter = "图像文件(*.jpg,*.bmp,*.png,*.jpeg)|*.jpg;*.bmp;*.png;*.jpeg";
+            if( openFileDialog.ShowDialog( ) == DialogResult.OK )
+            {
+                image.ReadImage( openFileDialog.FileName );
+
+                uC_Window1.HobjectToHimage( image );
+            }
+
+            //image.ReadImage( "齿轮.bmp" );
+
+            //uC_Window1.HobjectToHimage( image );
         }
 
         List<ROI> rois = new List<ROI> { };
@@ -54,6 +64,28 @@ namespace 找圆
         }
 
         private void cbRect_CheckedChanged( object sender , EventArgs e )
+        {
+            ChangeRect( );
+        }
+
+        private void cbROI_CheckedChanged( object sender , EventArgs e )
+        {
+            ChangeROI( );
+        }
+
+        void ChangeROI( )
+        {
+            if( cbROI.Checked )
+            {
+                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Include_ROI );
+            }
+            else
+            {
+                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Exclude_ROI );
+            }
+        }
+
+        void ChangeRect( )
         {
             uC_Window1.ClearObj( );
             if( cbRect.Checked )
@@ -80,20 +112,8 @@ namespace 找圆
                         uC_Window1.DispObj( item.Value , "green" );
                         break;
                 }
-                    
 
-            }
-        }
 
-        private void cbROI_CheckedChanged( object sender , EventArgs e )
-        {
-            if( cbROI.Checked )
-            {
-                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Include_ROI );
-            }
-            else
-            {
-                uC_Window1.ViewWindow.SetDispLevel( HWindowView.Model.ROICludeMode.Exclude_ROI );
             }
         }
 
@@ -108,7 +128,7 @@ namespace 找圆
                 radius = rois[ 0 ].GetModelData( )[ 2 ];
             }
 
-            
+
 
             circleResult = tool.FindCircle( image , row , col , radius , circleParam );
 
@@ -121,7 +141,8 @@ namespace 找圆
             uC_Window1.DispObj( circleResult.Points , "red" );
             uC_Window1.DispObj( circleResult.CircleContour , "green" );
             uC_Window1.DispObj( circleResult.CenterPoint , "green" );
-
+            ChangeROI( );
+            ChangeRect( );
         }
 
 
