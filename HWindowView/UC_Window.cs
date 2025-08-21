@@ -462,10 +462,12 @@ namespace HWindowView
 
         public void DispText( HTuple htext , HTuple color )
         {
-            lock( this )
-            {
-                _view.DispText( htext , color );
-            }
+            DispText( htext , "image" , color , 10 , 10 , 20 , "mono" , "true" , "false" );
+        }
+
+        public void DispText(HTuple htext,HTuple row,HTuple col,HTuple color )
+        {
+            DispText( htext , "image" ,color, row , col , 20 , "mono" , "true" , "false" );
         }
 
         #endregion 缩放后,再次显示传入的HObject

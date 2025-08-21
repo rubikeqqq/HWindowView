@@ -33,7 +33,7 @@ namespace 模板匹配
                 ModelParam.NumLevels,
                 ModelParam.AngleStart * Math.PI / 180,
                 ModelParam.AngleExtent * Math.PI / 180,
-                ModelParam.ScaleStep,
+                ModelParam.AngleStep,
                 ModelParam.ScaleMin,
                 ModelParam.ScaleMax,
                 ModelParam.ScaleStep,
@@ -44,10 +44,14 @@ namespace 模板匹配
             );
 
             OriXLDCont = ShapeModel.GetShapeModelContours(1);
+            var n = OriXLDCont.LengthXld().Length;
+            HRegion region = OriXLDCont.GenRegionContourXld("margin");
 
+            //region.AreaCenter(out HTuple row,out var col);
             HOperatorSet.AreaCenter(image,out HTuple _,out var row,out var col);
+            //image.AreaCenterGray(region,out HTuple row,out var col);    
 
-            homMat2D.VectorAngleToRigid(0,0,0,row,col,0);
+            homMat2D.VectorAngleToRigid(0,0,0,row,col[0],0);
 
             HXLDCont = OriXLDCont.AffineTransContourXld(homMat2D);
 
@@ -57,7 +61,7 @@ namespace 模板匹配
         public void FindScaleModel(HImage image)
         {
 
-            if(!ShapeModel.IsInitialized())
+            if( !ShapeModel.IsInitialized() )
             {
                 ShapeModel.ReadShapeModel("shapeModel.shm");
             }
@@ -83,9 +87,9 @@ namespace 模板匹配
 
             HXLDContList.Dispose();
 
-            if(FindModelParam.Score.Length > 0)
+            if( FindModelParam.Score.Length > 0 )
             {
-                for(int i = 0;i < FindModelParam.Score.Length;i++)
+                for( int i = 0 ; i < FindModelParam.Score.Length ; i++ )
                 {
                     HHomMat2D hHomMat2D = new HHomMat2D();
 
@@ -100,7 +104,7 @@ namespace 模板匹配
 
                     OriXLDCont = ShapeModel.GetShapeModelContours(1);
                     var xld = scaleHomMat2D.AffineTransContourXld(OriXLDCont);
-                    if(HXLDContList != null && !HXLDContList.IsInitialized())
+                    if( HXLDContList != null && !HXLDContList.IsInitialized() )
                     {
                         HXLDContList = xld.Clone();
                     }

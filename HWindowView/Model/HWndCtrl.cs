@@ -821,7 +821,7 @@ namespace HWindowView.Model
 
                     set_display_font( _viewPort.HalconWindow , hv_Size , hv_Font , hv_Bold , hv_Slant );
 
-                    _viewPort.HalconWindow.DispText( hText , coordSystem , row , col , color , "box" , "false" );
+                    _viewPort.HalconWindow.DispText( hText , coordSystem , row , col , color , "box" , "true" );
                     temp?.Dispose( );
                 }
             }

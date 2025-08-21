@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "找直线", "找直线\找�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "找圆", "找圆\找圆.csproj", "{75AE5EB0-0F0C-4CC4-9001-A82CBD6F448E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{2C6F133F-B3B0-4881-A7F3-1B3A7332BF7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "读字符", "读字符\读字符.csproj", "{A4CAF545-F8CF-448F-8018-2D881E73DA19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{75AE5EB0-0F0C-4CC4-9001-A82CBD6F448E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75AE5EB0-0F0C-4CC4-9001-A82CBD6F448E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75AE5EB0-0F0C-4CC4-9001-A82CBD6F448E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6F133F-B3B0-4881-A7F3-1B3A7332BF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6F133F-B3B0-4881-A7F3-1B3A7332BF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6F133F-B3B0-4881-A7F3-1B3A7332BF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6F133F-B3B0-4881-A7F3-1B3A7332BF7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4CAF545-F8CF-448F-8018-2D881E73DA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4CAF545-F8CF-448F-8018-2D881E73DA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4CAF545-F8CF-448F-8018-2D881E73DA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4CAF545-F8CF-448F-8018-2D881E73DA19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

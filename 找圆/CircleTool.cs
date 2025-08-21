@@ -11,42 +11,50 @@ namespace 找圆
     {
         private HMetrologyModel metrology;
 
-        public CircleTool()
+        public CircleTool( )
         {
-            metrology = new HMetrologyModel();
+            metrology = new HMetrologyModel( );
         }
 
-        public CircleResult FindCircle( HImage image,
-            double row,double col,double radius,
-            CircleParam circleParam)
+        public CircleResult FindCircle( HImage image ,
+            double row , double col , double radius ,
+            CircleParam circleParam )
         {
-            CircleResult result = new CircleResult();
+            CircleResult result = new CircleResult( );
 
             var index = metrology.AddMetrologyObjectCircleMeasure( row , col , radius ,
                 circleParam.Len1 , circleParam.Len2 , circleParam.Sigma ,
                 circleParam.Threshold , new HTuple( ) , new HTuple( ) );
 
-            metrology.SetMetrologyObjectParam( index,"measure_length1" , circleParam.Len1 );
-            metrology.SetMetrologyObjectParam( index,"measure_length2" , circleParam.Len2 );
-            metrology.SetMetrologyObjectParam( index,"measure_transition" , circleParam.Transition );
-            metrology.SetMetrologyObjectParam( index,"measure_select" , circleParam.Select);
-            metrology.SetMetrologyObjectParam( index,"measure_threshold" , circleParam.Threshold );
-            metrology.SetMetrologyObjectParam( index, "min_score" , circleParam.Score );
-            metrology.SetMetrologyObjectParam( index,"num_measures" , circleParam.NumMeasure );
+            metrology.SetMetrologyObjectParam( index , "measure_length1" , circleParam.Len1 );
+            metrology.SetMetrologyObjectParam( index , "measure_length2" , circleParam.Len2 );
+            metrology.SetMetrologyObjectParam( index , "measure_transition" , circleParam.Transition );
+            metrology.SetMetrologyObjectParam( index , "measure_select" , circleParam.Select );
+            metrology.SetMetrologyObjectParam( index , "measure_threshold" , circleParam.Threshold );
+            metrology.SetMetrologyObjectParam( index , "min_score" , circleParam.Score );
+            metrology.SetMetrologyObjectParam( index , "num_measures" , circleParam.NumMeasure );
 
             metrology.ApplyMetrologyModel( image );
 
             //矩形框点
-            var rows = metrology.GetMetrologyObjectResult(index,"all", "used_edges" , "row");
+            var rows = metrology.GetMetrologyObjectResult( index , "all" , "used_edges" , "row" );
             var cols = metrology.GetMetrologyObjectResult( index , "all" , "used_edges" , "column" );
             //中心点
             var cRow = metrology.GetMetrologyObjectResult( index , "all" , "result_type" , "row" );
             var cCol = metrology.GetMetrologyObjectResult( index , "all" , "result_type" , "column" );
 
+            if( cRow.ToDArr( ).Count( ) <= 0 ) return null;
 
+            //圆
             result.CircleContour = metrology.GetMetrologyObjectResultContour( index , "all" , 1.5 );
+
+            //result.CircleContour.FitCircleContourXld( "algebraic" , -1 , 0 , 0 , 3 , 2 , out HTuple _ , out var _ , out var _ , out var _ , out var _ , out var _ );
+
+            //检测框交点
             result.Points.GenCrossContourXld( rows , cols , 6 , 0.785398 );
+            //检测框
             result.Rects = metrology.GetMetrologyObjectMeasures( index , "all" , out var _ , out var _ );
+            //中心点
             result.CenterPoint.GenCrossContourXld( cRow.D , cCol.D , 16 , 0.78 );
 
             return result;
@@ -65,7 +73,7 @@ namespace 找圆
         public int NumMeasure;
         public double Score;
 
-        public CircleParam()
+        public CircleParam( )
         {
             Len1 = 30;
             Len2 = 5;
@@ -86,12 +94,12 @@ namespace 找圆
         public HXLDCont CircleContour; //圆
         public HXLDCont CenterPoint;   //中心点
 
-        public CircleResult()
+        public CircleResult( )
         {
-            Points = new HXLDCont();
-            Rects = new HXLDCont();
-            CircleContour = new HXLDCont();
-            CenterPoint = new HXLDCont();
+            Points = new HXLDCont( );
+            Rects = new HXLDCont( );
+            CircleContour = new HXLDCont( );
+            CenterPoint = new HXLDCont( );
         }
     }
 }

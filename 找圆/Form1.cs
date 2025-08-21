@@ -132,17 +132,21 @@ namespace 找圆
 
             circleResult = tool.FindCircle( image , row , col , radius , circleParam );
 
-            hXLDConts.Clear( );
+            if( circleResult != null )
+            {
+                hXLDConts.Clear( );
 
-            hXLDConts.Add( "centerPoint" , circleResult.CenterPoint );
-            hXLDConts.Add( "points" , circleResult.Points );
-            hXLDConts.Add( "circle" , circleResult.CircleContour );
-            //uC_Window1.DispObj( circleResult.Rects , "blue" );
-            uC_Window1.DispObj( circleResult.Points , "red" );
-            uC_Window1.DispObj( circleResult.CircleContour , "green" );
-            uC_Window1.DispObj( circleResult.CenterPoint , "green" );
-            ChangeROI( );
-            ChangeRect( );
+                hXLDConts.Add( "centerPoint" , circleResult.CenterPoint );
+                hXLDConts.Add( "points" , circleResult.Points );
+                hXLDConts.Add( "circle" , circleResult.CircleContour );
+                //uC_Window1.DispObj( circleResult.Rects , "blue" );
+                uC_Window1.DispObj( circleResult.Points , "red" );
+                uC_Window1.DispObj( circleResult.CircleContour , "green" );
+                uC_Window1.DispObj( circleResult.CenterPoint , "green" );
+                ChangeROI( );
+                ChangeRect( );
+            }
+
         }
 
 
